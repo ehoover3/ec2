@@ -34,6 +34,9 @@ async function downloadCSVForStates(OccupationCode, states) {
       })
       .promise();
     console.log(`File uploaded to S3: ${fileKey}`);
+
+    fs.unlinkSync(`${__dirname}/../Downloads/LocalSalary_${OccupationCode}_${state}.csv`);
+    console.log(`File deleted from Downloads folder: LocalSalary_${OccupationCode}_${state}.csv`);
   });
   await Promise.all(downloadTasks);
   await browser.close();
