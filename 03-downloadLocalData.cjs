@@ -1,5 +1,12 @@
 const fs = require("fs");
 const puppeteer = require("puppeteer");
+const AWS = require("aws-sdk");
+
+const s3 = new AWS.S3({
+  accessKeyId: "YOUR_ACCESS_KEY_ID",
+  secretAccessKey: "YOUR_SECRET_ACCESS_KEY",
+  region: "us-east-1",
+});
 
 const filePath = "./OccupationCodes.json";
 const rawOccupationCodes = fs.readFileSync(filePath, "utf8");
@@ -16,6 +23,17 @@ async function downloadCSVForStates(OccupationCode, states) {
     await page.waitForSelector(selector);
     await page.click(selector);
     await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    const fileKey = `OccupationCodes/${OccupationCode}_${state}.csv`;
+    const fileContent = fs.readFileSync(`LocalSalary_${OccupationCode}_${state}.csv`);
+    await s3
+      .upload({
+        Bucket: "local-career-files",
+        Key: fileKey,
+        Body: fileContent,
+      })
+      .promise();
+    console.log(`File uploaded to S3: ${fileKey}`);
   });
   await Promise.all(downloadTasks);
   await browser.close();
