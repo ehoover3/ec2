@@ -15,7 +15,7 @@ async function downloadCSVForStates(OccupationCode, states) {
     const selector = `a[href$="LocalSalary_${OccupationCode}_${state}.csv?fmt=csv&st=${state}"]`;
     await page.waitForSelector(selector);
     await page.click(selector);
-    await page.waitForTimeout(5000);
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   });
   await Promise.all(downloadTasks);
   await browser.close();
