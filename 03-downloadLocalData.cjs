@@ -25,7 +25,7 @@ async function downloadCSVForStates(OccupationCode, states) {
     await new Promise((resolve) => setTimeout(resolve, 5000));
 
     const fileKey = `OccupationCodes/${OccupationCode}_${state}.csv`;
-    const fileContent = fs.readFileSync(`../Downloads/LocalSalary_${OccupationCode}_${state}.csv`);
+    const fileContent = fs.readFileSync(`${__dirname}/../Downloads/LocalSalary_${OccupationCode}_${state}.csv`);
     await s3
       .upload({
         Bucket: "local-career-files",
