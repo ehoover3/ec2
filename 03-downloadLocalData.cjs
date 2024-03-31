@@ -23,6 +23,7 @@ async function downloadCSVForStates(OccupationCode, states) {
     await page.waitForSelector(selector);
     await page.click(selector);
     await new Promise((resolve) => setTimeout(resolve, 5000));
+    console.log(`${OccupationCode} ${stateBatch} downloaded`);
 
     const fileKey = `OccupationCodes/${OccupationCode}_${state}.csv`;
     const fileContent = fs.readFileSync(`${__dirname}/../Downloads/LocalSalary_${OccupationCode}_${state}.csv`);
@@ -51,9 +52,10 @@ const allStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "
     for (let i = 0; i < allStates.length; i += batchSize) {
       const stateBatch = allStates.slice(i, i + batchSize);
       await downloadCSVForStates(OccupationCode, stateBatch);
-      console.log(`${OccupationCode} ${stateBatch} downloaded`);
     }
+    console.log("********************************************************");
     console.log(`Completed ${codeCounter} out of ${OccupationCodes.length}`);
+    console.log("********************************************************");
     codeCounter += 1;
     fs.appendFileSync("OccupationCodes.txt", `${OccupationCode}\n`);
   }
