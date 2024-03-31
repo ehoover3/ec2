@@ -1,7 +1,7 @@
 const fs = require("fs");
 const puppeteer = require("puppeteer");
 
-const filePath = "./output/OccupationCodes.json";
+const filePath = "./OccupationCodes.json";
 const rawOccupationCodes = fs.readFileSync(filePath, "utf8");
 const OccupationCodes = JSON.parse(rawOccupationCodes);
 console.log(OccupationCodes);
