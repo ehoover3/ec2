@@ -7,7 +7,7 @@ const OccupationCodes = JSON.parse(rawOccupationCodes);
 console.log(OccupationCodes);
 
 async function downloadCSVForStates(OccupationCode, states) {
-  const browser = await puppeteer.launch({ headless: "true" });
+  const browser = await puppeteer.launch({ headless: "true", args: ["--no-sandbox", "--disable-setuid-sandbox"] });
   const pages = await Promise.all(states.map((state) => browser.newPage()));
   const downloadTasks = states.map(async (state, index) => {
     const page = pages[index];
