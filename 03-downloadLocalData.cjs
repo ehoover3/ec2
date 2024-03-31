@@ -23,7 +23,7 @@ async function downloadCSVForStates(OccupationCode, states) {
     await page.waitForSelector(selector);
     await page.click(selector);
     await new Promise((resolve) => setTimeout(resolve, 5000));
-    console.log(`${OccupationCode} ${stateBatch} downloaded`);
+    console.log(`${OccupationCode} ${state} downloaded`);
 
     const fileKey = `OccupationCodes/${OccupationCode}_${state}.csv`;
     const fileContent = fs.readFileSync(`${__dirname}/../Downloads/LocalSalary_${OccupationCode}_${state}.csv`);
